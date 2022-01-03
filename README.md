@@ -1,3 +1,3 @@
 # learn-typescript
 
-learning typescript tutorial
+## Learning TypeScript Tutorial
