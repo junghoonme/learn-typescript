@@ -83,3 +83,80 @@ const me: IUser = {
 };
 
 console.log(me);
+
+type Score = 'A' | 'B' | 'C' | 'D' | 'F';
+
+interface User {
+  name: string;
+  age: number;
+  gender?: string; // ?: optional
+  readonly birthYear: number; // readonly: 읽기 전용
+  [grade: number]: Score; // 키와 키값 타입 지정
+}
+
+let user: User = {
+  name: 'hoony',
+  age: 30,
+  birthYear: 1993,
+  1: 'D',
+  2: 'B',
+};
+
+interface Add {
+  (num1: number, num2: number): number;
+}
+
+const add: Add = (x, y) => x + y;
+
+interface IsAdult {
+  (age: number): boolean;
+}
+
+const isAdult: IsAdult = (age) => age > 19;
+
+interface Car {
+  color: string;
+  wheels: number;
+  start(): void;
+}
+
+interface Toy {
+  name: string;
+}
+
+// extends 두개 확장
+interface ToyCar extends Car, Toy {
+  price: number;
+}
+
+// extends
+interface Benz extends Car {
+  door: number;
+  stop(): void;
+}
+
+const benz: Benz = {
+  color: 'black',
+  wheels: 4,
+  door: 5,
+  start() {
+    console.log('Go start');
+  },
+  stop() {
+    console.log('Stop!');
+  },
+};
+
+// implements
+class Bmw implements Car {
+  color;
+  wheels = 4;
+
+  constructor(color: string) {
+    this.color = color;
+  }
+
+  start() {
+    console.log('Go start');
+  }
+}
