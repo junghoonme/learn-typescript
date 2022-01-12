@@ -160,3 +160,65 @@ class Bmw implements Car {
     console.log('Go start');
   }
 }
+
+// 함수 타입 지정
+const hello = (name?: string) => {
+  return `Hello, ${name || 'World'}`;
+};
+
+// ===
+const hello2 = (name = 'World') => {
+  return `Hello, ${name}`;
+};
+
+const hello3 = (name: string, age?: number) => {
+  if (age !== undefined) {
+    return `Hello, ${name}. You are ${age} years old`;
+  } else {
+    return `Hello, ${name}`;
+  }
+};
+
+// rest parameter
+const sum = (...nums: number[]) => {
+  return nums.reduce((acc, cur) => acc + cur, 0);
+};
+
+// this
+interface User1 {
+  name: string;
+}
+
+const Hoony: User1 = {
+  name: 'Hoony',
+};
+
+function showName(this: User1, age: number, gender: 'M' | 'F') {
+  console.log(this.name, age, gender);
+}
+
+const call = showName.bind(Hoony);
+call(30, 'M');
+
+// overload
+interface User2 {
+  name: string;
+  age: number;
+}
+
+// 각 리턴 타입 설정
+function join(name: string, age: number): User2;
+function join(name: string, age: string): string;
+function join(name: string, age: number | string): User2 | string {
+  if (typeof age === 'number') {
+    return {
+      name,
+      age,
+    };
+  } else {
+    return '나이는 숫자로 입력해주세요';
+  }
+}
+
+const sam: User2 = join('Sam', 30);
+const jane: string = join('Jane', '30');
