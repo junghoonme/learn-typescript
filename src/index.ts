@@ -311,3 +311,77 @@ const toyCar: Toy3 & Car3 = {
   color: 'blue',
   price: 10000,
 };
+
+// Class Types
+// 접근 제한자(Access Modifiers) - private, protected, public
+
+class Car4 {
+  color: string;
+
+  // * public 클래스, 자식 클래스, 인스턴스 접근 가능
+  name: string = 'car'; // === public name: string = 'car';
+  // * readonly 읽기 전용
+  // readonly name: string = 'car';
+  // * private 클래스에서만 접근 가능
+  // private name: string = 'car'; // ===  #name: string = 'car';
+  // * 클래스,자식 클래스에서만 접근 가능
+  // protected name: string = 'car'; // ===  #name: string = 'car';
+
+  // * static 정적 멤버 변수 (접근할려면 class명 사용, this 사용 불가)
+  static wheels = 4;
+
+  constructor(color: string) {
+    this.color = color;
+  }
+
+  start() {
+    console.log('Go start');
+    console.log(this.name);
+    console.log(Car4.wheels);
+  }
+}
+
+class Tesla extends Car4 {
+  constructor(color: string) {
+    super(color);
+  }
+
+  showName() {
+    console.log(super.name);
+  }
+}
+
+const m3 = new Tesla('red');
+m3.name = 'model3';
+console.log(m3.name);
+console.log(Car4.wheels);
+
+// 추상 클래스: 상속을 통해서만 사용 가능
+
+abstract class Car5 {
+  color: string;
+
+  constructor(color: string) {
+    this.color = color;
+  }
+
+  start() {
+    console.log('Go start');
+  }
+
+  // * abstract 메서드는 상속된 곳에서 구현을 해야 함
+  abstract showName(): void;
+}
+
+class Volvo extends Car5 {
+  constructor(color: string) {
+    super(color);
+  }
+
+  showName() {
+    console.log('Volvo');
+  }
+}
+
+const xc = new Volvo('silver');
+console.log(xc);
