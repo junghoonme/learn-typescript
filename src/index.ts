@@ -385,3 +385,69 @@ class Volvo extends Car5 {
 
 const xc = new Volvo('silver');
 console.log(xc);
+
+// Generic Types - 다양한 타입으로 재사용 가능
+
+const getSize = <T>(arr: T[]): number => arr.length;
+
+const arr1 = [1, 2, 3];
+getSize<number>(arr1);
+
+const arr2 = ['1', '2', '3'];
+getSize<string>(arr2);
+
+const arr3 = [true, false, true];
+getSize<boolean>(arr3);
+
+const arr4 = [{}, {}, { name: 'hoony' }];
+getSize<object>(arr4);
+
+// * Interface 와 Generic Types 1
+
+interface Mobile<T> {
+  name: string;
+  price: number;
+  option: T;
+}
+
+const m1: Mobile<object> = {
+  name: 'iPhone',
+  price: 100000,
+  option: {
+    color: 'red',
+    coupon: false,
+  },
+};
+
+const m2: Mobile<string> = {
+  name: 'Galaxy',
+  price: 200000,
+  option: 'good',
+};
+
+// * Interface 와 Generic Types 2
+
+interface User4 {
+  name: string;
+  age: number;
+}
+
+interface Car6 {
+  name: string;
+  color: string;
+}
+
+interface Book {
+  name: string;
+  price: number;
+}
+
+const user4: User4 = { name: 'bob', age: 30 };
+const car6: Car6 = { name: 'tesla', color: 'black' };
+const book: Book = { name: 'jungle book', price: 1000 };
+
+const returnName = <T extends { name: string }>(data: T): string => data.name;
+
+returnName(user4);
+returnName(car6);
+returnName(book);
