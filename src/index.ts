@@ -451,3 +451,95 @@ const returnName = <T extends { name: string }>(data: T): string => data.name;
 returnName(user4);
 returnName(car6);
 returnName(book);
+
+// Utility Types - 이름이 중복되는 타입을 정의할 때 사용
+
+// * keyof - property key를 반환
+
+interface User5 {
+  id: number;
+  name: string;
+  age: number;
+  gender: 'm' | 'f';
+}
+
+type UserKey = keyof User5; // === 'id' | 'name' | 'age' | 'gender'
+
+const uk: UserKey = 'id';
+
+// * Partial<T> - property를 모두 optional로 바꿔줌
+
+let admin1: Partial<User5> = { id: 1, name: 'Hoony' };
+
+// * Required<T> - property를 모두 essential로 바꿔줌
+
+let admin2: Required<User5> = {
+  id: 1,
+  name: 'Hoony',
+  age: 30,
+  gender: 'm',
+};
+
+// * Readonly<T> - 키 값 수정 불가
+
+let admin3: Readonly<User5> = {
+  id: 1,
+  name: 'Hoony',
+  age: 30,
+  gender: 'm',
+};
+
+//// admin3.id = 3;
+
+// * Record<K,T> - K: Key, T: Type
+
+// interface Score2 {
+//   '1': 'A' | 'B' | 'C' | 'D';
+//   '2': 'A' | 'B' | 'C' | 'D';
+//   '3': 'A' | 'B' | 'C' | 'D';
+//   '4': 'A' | 'B' | 'C' | 'D';
+// }
+
+type Grade = '1' | '2' | '3' | '4';
+type Score2 = 'A' | 'B' | 'C' | 'D';
+
+const score2: Record<Grade, Score2> = {
+  1: 'A',
+  2: 'B',
+  3: 'C',
+  4: 'D',
+};
+
+const isValid = (user5: User5): object => {
+  const result: Record<keyof User5, boolean> = {
+    id: user5.id > 0,
+    name: user5.name.length > 0,
+    age: user5.age > 0,
+    gender: user5.gender === 'm',
+  };
+  return result;
+};
+
+// * Pick<T,K> - 원하는 property만 골라 사용 가능
+
+const admin4: Pick<User5, 'id' | 'name'> = {
+  id: 4,
+  name: 'Admin4',
+};
+
+// * Omit<T,K> - 특정 property 생략 가능
+
+const admin5: Omit<User5, 'age' | 'gender'> = {
+  id: 5,
+  name: 'Admin5',
+};
+
+// * Exclude<T1,T2> - T1에서 T2를 제외한 타입 사용
+
+type T1 = string | number | boolean;
+type T2 = Exclude<T1, string | boolean>;
+
+// * NonNullable<Type> - null, undefined 제거한 타입 사용
+
+type T3 = string | null | undefined | void;
+type T4 = NonNullable<T3>;
